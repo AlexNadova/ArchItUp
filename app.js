@@ -18,7 +18,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 // Handling Errors pass app.use.
-// From Academind - tdo
 app.use((req, res, next) => {
   const error = new Error("Not found, tdo - Status 404?");
   error.status = 404;
