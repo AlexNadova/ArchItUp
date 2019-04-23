@@ -32,5 +32,5 @@ app.use((error, req, res, next) => {
     }
   });
 });
-
+console.log("Delete this");
 module.exports = app;
