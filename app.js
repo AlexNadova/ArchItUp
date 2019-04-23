@@ -6,7 +6,12 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index").default;
 const usersRouter = require("./routes/users").default;
 
+const database = require("./db/mongoDB");
+
 const app = express();
+
+// Get MongoConnection
+database.connectionWithCallback();
 
 app.use(logger("dev"));
 app.use(express.json());
