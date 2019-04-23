@@ -11,7 +11,7 @@ const database = require("./db/mongoDB");
 const app = express();
 
 // Get MongoConnection
-database.connectionWithCallback();
+database.connectWithCallback();
 
 app.use(logger("dev"));
 app.use(express.json());
