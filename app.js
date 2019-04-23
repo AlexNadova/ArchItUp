@@ -3,7 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-//const database = require("./db/mongoDB");
+const database = require("./db/mongoDB");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -11,7 +11,7 @@ const usersRouter = require("./routes/users");
 const app = express();
 
 // Get MongoConnection
-//database.connectWithCallback();
+database.connectWithCallback();
 
 app.use(logger("dev"));
 app.use(express.json());
