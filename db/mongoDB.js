@@ -10,11 +10,8 @@ client.connect(err => {
 //The require(‘mongoose’) call returns a Singleton object.
 const mongoose = require("mongoose");
 
-//const server = "exer6BookDb:27017"; //'jesper:1tester@ds159377.mlab.com:59377'; // REPLACE WITH YOUR DB SERVER
-//const database = "testerdb"; // REPLACE WITH YOUR DB NAME;
 const uri =
-  "mongodb+srv://alexandranadova:<password>@tester-yssrq.mongodb.net/ArchItUp";
-// exer6BookDb:27017
+  "mongodb+srv://alexandranadova:3%21CdyHpfRMofUEkgvNg@tester-yssrq.mongodb.net/ArchItUp";
 
 class Database {
   constructor() {}
