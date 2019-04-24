@@ -18,7 +18,7 @@ class Database {
 
   connectWithPromise() {
     mongoose
-      .connect(uri)
+      .connect(uri, {useNewUrlParser: true})
       .then(() => {
         console.log("Database connection successful");
       })
@@ -28,7 +28,7 @@ class Database {
   }
 
   connectWithCallback() {
-    mongoose.connect(uri, err => {
+    mongoose.connect(uri, {useNewUrlParser: true}, err => {
       if (err) return console.log(err);
       console.log("Database connection successful");
     });

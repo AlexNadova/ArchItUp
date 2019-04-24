@@ -1,4 +1,3 @@
-// UserController
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
@@ -23,8 +22,18 @@ exports.user_signup = (req, res, next) => {
           } else {
             const user = new User({
               _id: new mongoose.Types.ObjectId(),
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
+              dateOfBirth: req.body.dateOfBirth,
+              country: req.body.country,
+              city: req.body.city,
               email: req.body.email,
-              password: hash
+              password: hash,
+              phone: req.body.phone,
+              fieldOfFocus: req.body.fieldOfFocus,
+              education: req.body.education,
+              workExperience: req.body.workExperience,
+              description: req.body.description
             });
             user
               .save()
@@ -67,7 +76,7 @@ exports.user_login = (req, res, next) => {
               email: user[0].email,
               userId: user[0]._id
             },
-            process.env.JWT_KEY,
+            "shhh",//process.env.JWT_KEY,
             {
               expiresIn: "1h"
             }
