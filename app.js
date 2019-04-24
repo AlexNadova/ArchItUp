@@ -3,10 +3,10 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
+const database = require("./db/mongoDB");
+
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
-
-const database = require("./db/mongoDB");
 
 const app = express();
 
