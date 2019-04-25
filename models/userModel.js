@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const confi = require("../config");
 
 const { Schema } = mongoose;
 
@@ -9,6 +10,7 @@ const userModel = new Schema({
   dateOfBirth: { type: Date },
   country: { type: String },
   city: { type: String },
+  permissionLevel: { type: Number, default: confi.permissionLevels.RAID_USER },
   email: {
     type: String,
     required: true,

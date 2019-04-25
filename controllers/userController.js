@@ -2,6 +2,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const conf = require("../config");
 
 const User = require("../models/userModel");
 
@@ -27,6 +28,7 @@ exports.user_signup = (req, res, next) => {
               dateOfBirth: req.body.dateOfBirth,
               country: req.body.country,
               city: req.body.city,
+              permissionLevel: req.permissionLevel,
               email: req.body.email,
               password: hash,
               phone: req.body.phone,
@@ -61,33 +63,37 @@ exports.user_login = (req, res, next) => {
     .then(user => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "Authentication failed"
         });
       }
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: "Auth failed"
+            message: "Authentication failed"
           });
         }
         if (result) {
+          // Generate the token. Header, Payload and Signature.
           const token = jwt.sign(
             {
+              // Token's Payload
               email: user[0].email,
               userId: user[0]._id
             },
-            "shhh",//process.env.JWT_KEY,
+            // Token's PrivateKey (secret)
+            conf.security.SECRETKEY,
             {
+              // The token will expire: 1h = 1 hour 
               expiresIn: "1h"
             }
           );
           return res.status(200).json({
-            message: "Auth successful",
+            message: "Authentication successful",
             token: token
           });
         }
         res.status(401).json({
-          message: "Auth failed"
+          message: "Authentication failed"
         });
       });
     })
