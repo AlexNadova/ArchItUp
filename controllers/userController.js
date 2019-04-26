@@ -104,6 +104,36 @@ exports.user_login = (req, res, next) => {
     });
 };
 
+// Get user by Id.
+exports.user_get_user = (req, res, next) => {
+  const id = req.params.userId;
+  User.findById(id)
+    .select(
+      "_id firstName lastName dateOfBirth country city permissionLevel email password phone fieldOfFocus education workExperience description"
+    )
+    .exec()
+    .then(doc => {
+      console.log("From database", doc);
+      if (doc) {
+        res.status(200).json({
+          product: doc,
+          request: {
+            type: "GET",
+            url: "http://localhost:4000/user"
+          }
+        });
+      } else {
+        res
+          .status(404)
+          .json({ message: "No valid entry found for provided ID" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+};
+
 exports.user_delete = (req, res, next) => {
   User.remove({ _id: req.params.userId })
     .exec()
