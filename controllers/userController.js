@@ -117,9 +117,9 @@ exports.user_get_user = (req, res, next) => {
       if (doc) {
         res.status(200).json({
           product: doc,
-          request: {
+          user: {
             type: "GET",
-            url: "http://localhost:4000/user"
+            url: "http://localhost:4000/api/users"
           }
         });
       } else {
@@ -131,6 +131,56 @@ exports.user_get_user = (req, res, next) => {
     .catch(err => {
       console.log(err);
       res.status(500).json({ error: err });
+    });
+};
+
+exports.user_get_all = (req, res, next) => {
+  User.find()
+    .select(
+      "_id firstName lastName dateOfBirth country city permissionLevel email password phone fieldOfFocus education workExperience description"
+    )
+    .exec()
+    .then(docs => {
+      console.log("From database (all users)", docs);
+      const response = {
+        count: docs.length,
+        users: docs.map(doc => {
+          return {
+            _id: doc._id,
+            firstName: doc.firstName,
+            lastName: doc.lastName,
+            dateOfBirth: doc.dateOfBirth,
+            country: doc.country,
+            city: doc.city,
+            permissionLevel: doc.permissionLevel,
+            email: doc.email,
+            password: doc.password,
+            phone: doc.phone,
+            fieldOfFocus: doc.fieldOfFocus,
+            education: doc.education,
+            workExperience: doc.workExperience,
+            description: doc.description,
+            request: {
+              type: "GET",
+              url: "http://localhost:4000/api/user/" + doc._id
+            }
+          };
+        })
+      };
+
+      //   if (docs.length >= 0) {
+      res.status(200).json(response);
+      //   } else {
+      //       res.status(404).json({
+      //           message: 'No entries found'
+      //       });
+      //   }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
     });
 };
 
