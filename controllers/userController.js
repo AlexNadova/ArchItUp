@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -83,7 +82,7 @@ exports.user_login = (req, res, next) => {
             // Token's PrivateKey (secret)
             conf.security.SECRETKEY,
             {
-              // The token will expire: 1h = 1 hour 
+              // The token will expire: 1h = 1 hour
               expiresIn: "1h"
             }
           );
@@ -95,6 +94,22 @@ exports.user_login = (req, res, next) => {
         res.status(401).json({
           message: "Authentication failed"
         });
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};
+
+exports.user_delete = (req, res, next) => {
+  User.remove({ _id: req.params.userId })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: "User deleted"
       });
     })
     .catch(err => {
