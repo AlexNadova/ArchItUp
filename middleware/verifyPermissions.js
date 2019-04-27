@@ -1,5 +1,5 @@
 // middleware for doing role-based permissions
-export default function permit(...allowed) {
+/* export default function permit(...allowed) {
     const isAllowed = role => allowed.indexOf(role) > -1;
     
     // return a middleware
@@ -10,7 +10,7 @@ export default function permit(...allowed) {
         response.status(403).json({message: "Forbidden"});
       }
     }
-  }
+  } */
 
   //if(user_permission_level & required_permission_level) {
    //   return next();

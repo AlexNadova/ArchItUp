@@ -3,6 +3,7 @@ const router = express.Router();
 
 const UserController = require("../controllers/userController");
 const verifyAuth = require("../middleware/verify-auth");
+const permission = require("../middleware/verifyPermissions");
 
 router.post("/user/signup", UserController.user_signup);
 
