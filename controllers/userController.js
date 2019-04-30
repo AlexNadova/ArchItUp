@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const conf = require("../config");
+const config = require("../config");
 
 const User = require("../models/userModel");
 
@@ -14,6 +14,10 @@ exports.user_signup = (req, res, next) => {
           message: "Mail exists"
         });
       } else {
+        /* Bcrypt: https://github.com/kelektiv/node.bcrypt.js/#usage
+        1. param: request.body.password is the password to be encrypted 
+        2. param: 10 is the salt to be used in the encryption  */
+
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           if (err) {
             return res.status(500).json({
@@ -57,6 +61,8 @@ exports.user_signup = (req, res, next) => {
 };
 
 exports.user_login = (req, res, next) => {
+  /* User.find will make an array of all the users to find, but of course there is only one user when login.
+  You can also use User.findOne this will make sure you don't get an array but just one user. */
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
@@ -65,6 +71,10 @@ exports.user_login = (req, res, next) => {
           message: "Authentication failed"
         });
       }
+      /* To check a password: https://github.com/kelektiv/node.bcrypt.js/#to-check-a-password
+      request.body.password is the plain text password, that the user types in.
+      user[0].password is the hashed password to compare the plain text password to.
+      Returns true if both passwords hashes to the same. If they were hashed withe the same algorithm */
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
           return res.status(401).json({
@@ -80,7 +90,7 @@ exports.user_login = (req, res, next) => {
               userId: user[0]._id
             },
             // Token's PrivateKey (secret)
-            conf.security.SECRETKEY,
+            config.security.SECRETKEY,
             {
               // The token will expire: 1h = 1 hour
               expiresIn: "1h"
