@@ -116,8 +116,8 @@ exports.user_get_user = (req, res, next) => {
       console.log("From database", doc);
       if (doc) {
         res.status(200).json({
-          product: doc,
-          user: {
+          user: doc,
+          users: {
             type: "GET",
             url: "http://localhost:4000/api/users"
           }
@@ -175,6 +175,47 @@ exports.user_get_all = (req, res, next) => {
       //           message: 'No entries found'
       //       });
       //   }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};
+
+// Update user
+exports.user_update = (req, res, next) => {
+  // Get user Id
+  const id = req.params.userId;
+  // An empty JavaScript object.
+  const updateOps = {};
+  // Loop through all the operations (that are requested) of the request body.
+  for (const ops of req.body) {
+    updateOps[ops.propFirstName] = ops.value;
+    updateOps[ops.propLastName] = ops.value;
+    updateOps[ops.propDateOfBirth] = ops.value;
+    updateOps[ops.propCountry] = ops.value;
+    updateOps[ops.propCity] = ops.value;
+    //updateOps[ops.propEmail] = ops.value;
+    updateOps[ops.propPassword] = ops.value;
+    updateOps[ops.propPhone] = ops.value;
+    updateOps[ops.propFieldOfFocus] = ops.value;
+    updateOps[ops.propEducation] = ops.value;
+    updateOps[ops.propWorkExperience] = ops.value;
+    updateOps[ops.propDescription] = ops.value;
+  }
+  User.update({ _id: id }, { $set: updateOps })
+    .exec()
+    .then(result => {
+      console.log(result); // <-- Remove when done
+      res.status(200).json({
+        message: "User updated",
+        request: {
+          type: "GET",
+          url: "http://localhost:4000/api/user/" + id
+        }
+      });
     })
     .catch(err => {
       console.log(err);

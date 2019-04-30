@@ -9,10 +9,12 @@ router.post("/user/signup", UserController.user_signup);
 
 router.post("/user/login", UserController.user_login);
 
-//router.delete("/:userId", UserController.user_delete);
-
 router.get("/user/:userId", UserController.user_get_user); //checkAuth
 
 router.get("/users", UserController.user_get_all);
+
+router.patch("/user/:userId", UserController.user_update);
+
+router.delete("/user/:userId", UserController.user_delete);
 
 module.exports = router;
