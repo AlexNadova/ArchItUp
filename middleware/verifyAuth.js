@@ -1,14 +1,14 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config");
+const jwt = require("jsonwebtoken"),
+  secret = require("../config") //.SECRETKEY;
 
-module.exports = (req, res, next) => {
+exports.verifyJWT = (req, res, next) => {
   if (req.headers["authorization"]) {
     try {
       const authorization = req.headers["authorization"].split(" ");
       if (authorization[0] !== "Bearer") {
         return res.status(401).send();
       } else {
-        req.jwt = jwt.verify(authorization[1], config.security.SECRETKEY);
+        req.jwt = jwt.verify(authorization[1], secret);
         return next();
       }
     } catch (err) {
@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
     }
   } else {
     // 401 for an invalid request
-    return res.status(401).send("Auth failed");
+    return res.status(401).send("Auth failed " + req);
   }
 };
 

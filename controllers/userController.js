@@ -87,7 +87,8 @@ exports.user_login = (req, res, next) => {
             {
               // Token's Payload
               email: user[0].email,
-              userId: user[0]._id
+              userId: user[0]._id,
+              permissionLevel: user[0].permissionLevel
             },
             // Token's PrivateKey (secret)
             config.security.SECRETKEY,
