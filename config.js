@@ -5,18 +5,22 @@ module.exports = {
     A numeric value is interpreted as a seconds count (60).
     If you use a string be sure you provide the time units ("2 days", "1 hours", "2d", "1h"  ),
     otherwise milliseconds unit is used by default ("120" is equal to "120ms"). */
-    TOKEN_EXP: "1h",
+    TOKEN_EXP: "1h"
     /* If notBefore: is 3000, then the token cannot be used before 3 seconds of creation. 
     This makes a brute force attack nearly impossible.*/
     //TOKEN_ACTIVE_AFTER: "1h"
   },
   permissionLevels: {
     // PUBLIC - For registration
-    NORMAL_USER: 1, // Bitwise: 0
+    VISITORS: 1, // Bitwise: 0
     // Private - For logged-in user and for admins to update that user
-    REG_USER: 4, // Bitwise: 100
+    REG_USER: 4, // Bitwise: 00000100
     // Private - for Admin only for removing users account
-    ADMIN: 2048 // Bitwise: 100000000000
+    ADMIN: 128 // Bitwise: 100000000000
+
+    //Users
+    /*An admin can then have all permissions by setting their permission value to 2147483647 = 1111111111111111111111111111111 
+    A user whose permission value was set to 7 (00000111) would have permissions to the roles marked with bits for values 1(00000001), 2(00000010), and 4(00000100)*/
   },
   database: {
     MONGODB:

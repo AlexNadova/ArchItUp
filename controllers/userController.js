@@ -212,6 +212,7 @@ exports.user_update = (req, res, next) => {
     updateOps[ops.propDateOfBirth] = ops.value;
     updateOps[ops.propCountry] = ops.value;
     updateOps[ops.propCity] = ops.value;
+    updateOps[ops.propPermissionLevel] = ops.value;
     //updateOps[ops.propEmail] = ops.value;
     updateOps[ops.propPassword] = ops.value;
     updateOps[ops.propPhone] = ops.value;

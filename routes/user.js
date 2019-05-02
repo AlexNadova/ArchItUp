@@ -7,18 +7,18 @@ const config = require("../config");
 
 // Users on the system
 const ADMIN = config.permissionLevels.ADMIN; // High authority level
-const REGISTERED = config.permissionLevels.REG_USER; // Medium authority level
-const NORMAL = config.permissionLevels.NORMAL_USER; // Low authority level
+const REG_USER = config.permissionLevels.REG_USER; // Medium authority level
+const VISITORS = config.permissionLevels.VISITORS; // Low authority level
 
 router.post("/user/signup", UserController.user_signup);
 
 router.post("/user/login", UserController.user_login);
 
-router.get("/user/:userId", UserController.user_get_user); //checkAuth
+router.get("/user/:userId", [checkAuth, UserController.user_get_user]); //checkAuth
 
 router.get("/users", [
   checkAuth,
-  verifyPermission.minimumPermissionLevelRequired(REGISTERED),
+  verifyPermission.minimumPermissionLevelRequired(ADMIN),
   UserController.user_get_all
 ]);
 

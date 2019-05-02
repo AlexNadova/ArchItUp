@@ -1,0 +1,40 @@
+permissionLevels - Bitwise
+
+    ---------------------------------------------------------------
+    required_permission_level
+        VISITORS: 1 - Binary 00000001
+        REG_USER: 4 - Binary 00000100
+        ADMIN: 128  - Binary 10000000
+    ---------------------------------------------------------------
+    ---------------------------------------------------------------    
+    Users:
+        Visitor:            Permission Level: 1   - Binary 00000001
+        Registerer user:    Permission Level: 7   - Binary 00000111
+        Administrator:      Permission Level: 255 - Binary 11111111
+
+    ---------------------------------------------------------------     
+
+    ------------------ How has access to what? --------------------
+
+    Visitor has authority:
+        Level 1       00000001
+        VISITORS: 1   00000001
+        REG_USER: 4   00000100
+        ADMIN: 128    10000000
+        Access:       X0000x01 - Only VISITORS
+
+    Registerer user has authority:
+        Level 7       00000111
+        VISITORS: 1   00000001
+        REG_USER: 4   00000100
+        ADMIN: 128    10000000
+        Access:       X0000101 - VISITORS and REG_USER
+
+    Administrator has authority:
+        Level 255     11111111
+        VISITORS: 1   00000001
+        REG_USER: 4   00000100
+        ADMIN: 128    10000000
+        Access:       10000101 Everything
+    ---------------------------------------------------------------
+    
