@@ -1,17 +1,9 @@
-/*const MongoClient = require(‘mongodb’).MongoClient;
-const uri = "mongodb+srv://alexandranadova:<password>@tester-yssrq.mongodb.net/ArchItUp";//test?retryWrites=true
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("ArchItUp").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});*/
 
 //The require(‘mongoose’) call returns a Singleton object.
 const mongoose = require("mongoose");
+const config = require("../config");
 
-const uri =
-  "mongodb+srv://alexandranadova:3%21CdyHpfRMofUEkgvNg@tester-yssrq.mongodb.net/ArchItUp";
+const uri = config.database.MONGODB;
 
 class Database {
   constructor() {}

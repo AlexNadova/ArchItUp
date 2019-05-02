@@ -5,6 +5,8 @@ const logger = require("morgan");
 
 const database = require("./db/mongoDB");
 
+const jwt = require("jsonwebtoken"); // used to create, sign, and verify tokens
+
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
 
@@ -13,6 +15,8 @@ const app = express();
 // Get MongoConnection
 database.connectWithCallback();
 
+// use express.json and express.urlencoded so we can get info from POST and/or URL parameters
+// Parses the text as JSON and exposes the resulting object on req.body.
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

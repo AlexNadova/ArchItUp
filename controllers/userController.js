@@ -68,7 +68,7 @@ exports.user_login = (req, res, next) => {
     .then(user => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: "Authentication failed"
+          message: "Authentication failed - No Mail"
         });
       }
       /* To check a password: https://github.com/kelektiv/node.bcrypt.js/#to-check-a-password
@@ -78,7 +78,7 @@ exports.user_login = (req, res, next) => {
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: "Authentication failed"
+            message: "Authentication failed - Password"
           });
         }
         if (result) {
@@ -90,12 +90,16 @@ exports.user_login = (req, res, next) => {
               userId: user[0]._id,
               permissionLevel: user[0].permissionLevel
             },
-            // Token's PrivateKey (secret)
+            // Token's PrivateKey
             config.security.SECRETKEY,
             {
-              // The token will expire: 1h = 1 hour
-              expiresIn: "1h"
-            }
+              // Token expires time
+              expiresIn: config.security.TOKEN_EXP
+            },
+            //{
+              // Time til token is activated.
+             // notBefore: config.security.TOKEN_VALID_AFTER
+            //},
           );
           return res.status(200).json({
             message: "Authentication successful",
@@ -103,7 +107,7 @@ exports.user_login = (req, res, next) => {
           });
         }
         res.status(401).json({
-          message: "Authentication failed"
+          message: "Authentication failed - usePass"
         });
       });
     })

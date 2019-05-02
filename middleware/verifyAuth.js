@@ -1,32 +1,40 @@
-const jwt = require("jsonwebtoken"),
-  secret = require("../config") //.SECRETKEY;
+const jwt = require("jsonwebtoken");
+const secret = require("../config");
 
-exports.verifyJWT = (req, res, next) => {
-  if (req.headers["authorization"]) {
-    try {
-      const authorization = req.headers["authorization"].split(" ");
-      if (authorization[0] !== "Bearer") {
-        return res.status(401).send();
+/* module.exports = (req, res, next) => {
+  try {
+    // The split() method is used to split a string into an array of substrings, and returns the new array.
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secret.security.SECRETKEY);
+    req.userData = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({
+      message: "Auth failed, missing access token"
+    });
+  }
+}; */
+
+module.exports = (req, res, next) => {
+  try {
+    // The split() method is used to split a string into an array of substrings, and returns the new array.
+    const token = req.headers.authorization.split(" ")[1];
+    jwt.verify(token, secret.security.SECRETKEY, (err, decoded) => {
+      // If current token is invalid, sends a jwt expired error.
+      if (err) {
+        err = {
+          name: "TokenExpiredError",
+          message: "jwt expired"
+          //expiredAt: 1408621000
+        };
       } else {
-        req.jwt = jwt.verify(authorization[1], secret);
-        return next();
+        req.userData = decoded;
       }
-    } catch (err) {
-      // 403 for a valid request with an invalid token, or valid token with invalid permissions
-      return res.status(403).send();
-    }
-  } else {
-    // 401 for an invalid request
-    return res.status(401).send("Auth failed " + req);
+      next();
+    });
+  } catch (error) {
+    return res.status(401).json({
+      message: "Auth failed, missing access token"
+    });
   }
 };
-
-/* const token = req.headers.authorization.split(" ")[1];
-      const decoded = jwt.verify(token, config.security.SECRETKEY);
-      req.userData = decoded;
-      next();
-    } catch (error) {
-      return res.status(401).json({
-        message: "Auth failed"
-      });
-    } */

@@ -1,7 +1,14 @@
 module.exports = {
   security: {
-    SECRETKEY: "bestsecretever", // JWT_KEY: "secretTokenKey",
-    //SECRETKEY_EXP: "h1"
+    SECRETKEY: "bestsecretever",
+    /* expiresIn: expressed in seconds or a string describing a time span - https://github.com/zeit/ms
+    A numeric value is interpreted as a seconds count (60).
+    If you use a string be sure you provide the time units ("2 days", "1 hours", "2d", "1h"  ),
+    otherwise milliseconds unit is used by default ("120" is equal to "120ms"). */
+    TOKEN_EXP: "1h",
+    /* If notBefore: is 3000, then the token cannot be used before 3 seconds of creation. 
+    This makes a brute force attack nearly impossible.*/
+    //TOKEN_ACTIVE_AFTER: "1h"
   },
   permissionLevels: {
     // PUBLIC - For registration
@@ -12,6 +19,7 @@ module.exports = {
     ADMIN: 2048 // Bitwise: 100000000000
   },
   database: {
-    //database: "mongodb://noder:noderauth&54;proximus.modulusmongo.net:27017/so9pojyN"
+    MONGODB:
+      "mongodb+srv://alexandranadova:3%21CdyHpfRMofUEkgvNg@tester-yssrq.mongodb.net/ArchItUp"
   }
 };
