@@ -7,9 +7,13 @@ const ADMIN_PERMISSION = 4096;
 
 exports.minimumPermissionLevelRequired = required_permission_level => {
   return (req, res, next) => {
+    // Gets the token from the header and The split() method returns a new array.
     const token = req.headers.authorization.split(" ")[1];
+    /* The token is verified by the secretKey and the payload permissionLevel is singled out
+    and converted to type number. */   
     const user_permission_level = parseInt(jwt.verify(token, secret.security.SECRETKEY).permissionLevel);
     //const user_id = req.jwt.user_id;
+    // Uses Bitwise to compare user and required permission levels. See file PermissionLevels.txt
     if (user_permission_level & required_permission_level) {
       return next();
     } else {
@@ -23,6 +27,7 @@ exports.minimumPermissionLevelRequired = required_permission_level => {
   };
 };
 
+// Not in use yet
 exports.onlySameUserOrAdminCanDoThisAction = (req, res, next) => {
   const user_permission_level = parseInt(req.jwt.permissionLevel);
   const userId = req.jwt.userId;

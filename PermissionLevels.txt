@@ -1,5 +1,14 @@
 permissionLevels - Bitwise
 
+    This is from the file middleware/verifyPermission.js
+    To compare if a user has the required permission level
+
+        if (user_permission_level & required_permission_level) {
+            return next();
+
+        user_permission_level     - is the user permissionLevel from the database, retrieved from the user verified token (payload).
+        required_permission_level - is the system access level, which is defined in config.js --> permissionLevels
+
     ---------------------------------------------------------------
     required_permission_level
         VISITORS: 1 - Binary 00000001
@@ -14,27 +23,43 @@ permissionLevels - Bitwise
 
     ---------------------------------------------------------------     
 
-    ------------------ How has access to what? --------------------
+    ------------------ Who has access to what? --------------------
 
-    Visitor has authority:
+    If a user permission value was set to 255 (binary: 11111111) 
+    would have permissions to the roles marked with values 
+    1(binary: 00000001), 4(binary: 00000100) and 7(binary: 00000111)
+
+    The different users have authority where the 1's matches up!
+
+    Visitor user has permission:
+    
         Level 1       00000001
-        VISITORS: 1   00000001
+        VISITORS: 1   00000001 < match
         REG_USER: 4   00000100
         ADMIN: 128    10000000
-        Access:       X0000x01 - Only VISITORS
 
-    Registerer user has authority:
+        Access to Only VISITORS required_permission_level
+
+    Registerer user has permission:
+
         Level 7       00000111
-        VISITORS: 1   00000001
-        REG_USER: 4   00000100
+        VISITORS: 1   00000001 < match
+        REG_USER: 4   00000100 < match
         ADMIN: 128    10000000
-        Access:       X0000101 - VISITORS and REG_USER
 
-    Administrator has authority:
+        Access to VISITORS and REG_USER required_permission_level
+
+    Administrator user has permission:
+
         Level 255     11111111
-        VISITORS: 1   00000001
-        REG_USER: 4   00000100
-        ADMIN: 128    10000000
-        Access:       10000101 Everything
+        VISITORS: 1   00000001 < match
+        REG_USER: 4   00000100 < match
+        ADMIN: 128    10000000 < match
+
+        Access to every required_permission_level
     ---------------------------------------------------------------
+    
+
+    ---------------------------------------------------------------
+
     

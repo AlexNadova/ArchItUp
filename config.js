@@ -11,15 +11,12 @@ module.exports = {
     //TOKEN_ACTIVE_AFTER: "1h"
   },
   permissionLevels: {
-    // PUBLIC - For registration
-    VISITORS: 1, // Bitwise: 0
-    // Private - For logged-in user and for admins to update that user
+    VISITORS: 1, // Bitwise: 00000001
     REG_USER: 4, // Bitwise: 00000100
-    // Private - for Admin only for removing users account
-    ADMIN: 128 // Bitwise: 100000000000
+    ADMIN: 128   // Bitwise: 10000000
 
-    //Users
-    /*An admin can then have all permissions by setting their permission value to 2147483647 = 1111111111111111111111111111111 
+    //Users Examples
+    /*An admin can then have all permissions by setting their permission value to  2147483647 = 1111111111111111111111111111111 
     A user whose permission value was set to 7 (00000111) would have permissions to the roles marked with bits for values 1(00000001), 2(00000010), and 4(00000100)*/
   },
   database: {
