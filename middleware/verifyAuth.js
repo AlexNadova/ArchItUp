@@ -34,7 +34,8 @@ module.exports = (req, res, next) => {
     });
   } catch (error) {
     return res.status(401).json({
-      message: "Auth failed, missing access token"
+      message:
+        "Auth failed. An access token is required to request this resource."
     });
   }
 };

@@ -8,8 +8,8 @@ const articleModel = new Schema({
   author: { type: Array, required: true },
   description: { type: String },
   keywords: { type: Array },
-  pictures: { type: Array },
-  titlePicture: { type: Boolean },
+  articleImages: { type: Array },
+  titleImage: { type: String },
   category: { type: Boolean },
   content: { type: String }
 });

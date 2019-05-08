@@ -9,15 +9,18 @@ const jwt = require("jsonwebtoken"); // used to create, sign, and verify tokens
 
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
+const articleRouter = require("./routes/article");
 
 const app = express();
 
 // Get MongoConnection
 database.connectWithCallback();
 
+app.use(logger("dev"));
+// /uploads is where all the saved files can be retrieved. And makes the upload folder public 
+app.use("/uploads", express.static("uploads"));
 // use express.json and express.urlencoded so we can get info from POST and/or URL parameters
 // Parses the text as JSON and exposes the resulting object on req.body.
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -38,6 +41,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/api", userRouter);
+app.use("/api/articles", articleRouter);
 
 // Handling Errors pass app.use.
 app.use((req, res, next) => {
