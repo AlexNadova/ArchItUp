@@ -10,14 +10,14 @@ router.post(
   "/",
   /* The single method means that we'll get one file only
    titleImages is the name of the field that is holding the file. */
-  upload.single("titleImage"),
+  [checkAuth, upload.single("titleImage"),
   articleController.articles_create_article
-);
+]);
 
-router.get("/:articleId", articleController.articles_get_article);
+router.get("/:articleId", [articleController.articles_get_article]);
 
-router.patch("/:articleId", articleController.articles_update_article);
+router.patch("/:articleId", [checkAuth, articleController.articles_update_article]);
 
-router.delete("/:articleId", articleController.articles_delete);
+router.delete("/:articleId", [checkAuth, articleController.articles_delete]);
 
 module.exports = router;
