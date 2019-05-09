@@ -43,7 +43,7 @@ exports.user_signup = (req, res, next) => {
                 fieldOfFocus: req.body.fieldOfFocus,
                 education: req.body.education,
                 workExperience: req.body.workExperience,
-                userImage: req.file.path,
+                //userImage: req.file.path,
                 description: req.body.description
               });
               user
