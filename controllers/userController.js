@@ -212,7 +212,6 @@ exports.user_update = (req, res, next) => {
   const id = req.params.userId;
   // An empty JavaScript object.
   const updateOps = {};
-  const hash = bcrypt.hash(req.body.password, 10); // newPassword
   // Loop through all the operations (that are requested) of the request body.
   for (const ops of req.body) {
     // updateOps = UpdateOperations
@@ -223,7 +222,7 @@ exports.user_update = (req, res, next) => {
     updateOps[ops.propCity] = ops.value;
     updateOps[ops.propPermissionLevel] = ops.value;
     //updateOps[ops.propEmail] = ops.value;
-    updateOps[ops.propPassword] = ops.value;
+    updateOps[ops.propPassword] = bcrypt.hashSync(ops.value, 10);
     updateOps[ops.propPhone] = ops.value;
     updateOps[ops.propFieldOfFocus] = ops.value;
     updateOps[ops.propEducation] = ops.value;
@@ -235,7 +234,7 @@ exports.user_update = (req, res, next) => {
     .then(result => {
       console.log(result); // <-- Remove when done
       res.status(200).json({
-        message: "User updated - " + hash,
+        message: "User updated",
         request: {
           type: "GET",
           url: "http://localhost:4000/api/user/" + id
@@ -265,30 +264,3 @@ exports.user_delete = (req, res, next) => {
       });
     });
 };
-
-/* Bcrypt: https://github.com/kelektiv/node.bcrypt.js/#usage
-        1. param: request.body.password is the password to be encrypted 
-        2. param: 10 is the salt to be used in the encryption  */
-/* 
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          if (err) {
-            return res.status(500).json({
-              error: err
-            });
-          } else {
-            const user = new User({
-              _id: new mongoose.Types.ObjectId(),
-              firstName: req.body.firstName,
-              lastName: req.body.lastName,
-              dateOfBirth: req.body.dateOfBirth,
-              country: req.body.country,
-              city: req.body.city,
-              permissionLevel: req.permissionLevel,
-              email: req.body.email,
-              password: hash,
-              phone: req.body.phone,
-              fieldOfFocus: req.body.fieldOfFocus,
-              education: req.body.education,
-              workExperience: req.body.workExperience,
-              description: req.body.description
-            }); */

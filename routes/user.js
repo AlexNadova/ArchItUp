@@ -27,8 +27,8 @@ router.get("/users", [
   UserController.user_get_all
 ]);
 
-router.patch("/user/:userId", [checkAuth, UserController.user_update]);
+router.patch("/user/:userId", [checkAuth, UserController.user_update]); // Same user only and Admin
 
-router.delete("/user/:userId", [checkAuth, UserController.user_delete]);
+router.delete("/user/:userId", [checkAuth, UserController.user_delete]); // Same user only and Admin
 
 module.exports = router;
