@@ -137,13 +137,10 @@ exports.user_get_user = (req, res, next) => {
     .then(doc => {
       console.log("From database", doc);
       if (doc) {
-        res.status(200).json({
-          user: doc,
-          users: {
-            type: "GET",
-            url: "http://localhost:4000/api/users"
-          }
-        });
+        res.status(200).json(
+          doc
+
+        );
       } else {
         res
           .status(404)
