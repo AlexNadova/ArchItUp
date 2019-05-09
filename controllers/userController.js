@@ -15,46 +15,53 @@ exports.user_signup = (req, res, next) => {
         });
       } else {
         /* Bcrypt: https://github.com/kelektiv/node.bcrypt.js/#usage
-        1. param: request.body.password is the password to be encrypted 
-        2. param: 10 is the salt to be used in the encryption  */
+         and https://lockmedown.com/node-js-password-storage-bcrypt/
+        Generate a salt and hash on separate function calls.
+        bcrypt.genSalt: Generate salt and rounds
+        bcrypt.hash:
+              1. param: request.body.password is the password to be encrypted 
+              2. param: Salt be used in the encryption  */
 
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          if (err) {
-            return res.status(500).json({
-              error: err
-            });
-          } else {
-            const user = new User({
-              _id: new mongoose.Types.ObjectId(),
-              firstName: req.body.firstName,
-              lastName: req.body.lastName,
-              dateOfBirth: req.body.dateOfBirth,
-              country: req.body.country,
-              city: req.body.city,
-              permissionLevel: req.permissionLevel,
-              email: req.body.email,
-              password: hash,
-              phone: req.body.phone,
-              fieldOfFocus: req.body.fieldOfFocus,
-              education: req.body.education,
-              workExperience: req.body.workExperience,
-              description: req.body.description
-            });
-            user
-              .save()
-              .then(result => {
-                console.log(result);
-                res.status(201).json({
-                  message: "User created"
-                });
-              })
-              .catch(err => {
-                console.log(err);
-                res.status(500).json({
-                  error: err
-                });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(req.body.password, salt, (err, hash) => {
+            if (err) {
+              return res.status(500).json({
+                error: err
               });
-          }
+            } else {
+              const user = new User({
+                _id: new mongoose.Types.ObjectId(),
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                dateOfBirth: req.body.dateOfBirth,
+                country: req.body.country,
+                city: req.body.city,
+                permissionLevel: req.permissionLevel,
+                email: req.body.email,
+                password: hash,
+                phone: req.body.phone,
+                fieldOfFocus: req.body.fieldOfFocus,
+                education: req.body.education,
+                workExperience: req.body.workExperience,
+                userImage: req.file.path,
+                description: req.body.description
+              });
+              user
+                .save()
+                .then(result => {
+                  console.log(result);
+                  res.status(201).json({
+                    message: "User created"
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                  res.status(500).json({
+                    error: err
+                  });
+                });
+            }
+          });
         });
       }
     });
@@ -68,7 +75,7 @@ exports.user_login = (req, res, next) => {
     .then(user => {
       if (user.length < 1) {
         return res.status(401).json({
-          message: "Authentication failed - No Mail"
+          message: "Authentication failed"
         });
       }
       /* To check a password: https://github.com/kelektiv/node.bcrypt.js/#to-check-a-password
@@ -78,7 +85,7 @@ exports.user_login = (req, res, next) => {
       bcrypt.compare(req.body.password, user[0].password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: "Authentication failed - Password"
+            message: "Authentication failed"
           });
         }
         if (result) {
@@ -95,10 +102,10 @@ exports.user_login = (req, res, next) => {
             {
               // Token expires time
               expiresIn: config.security.TOKEN_EXP
-            },
+            }
             //{
-              // Time til token is activated.
-             // notBefore: config.security.TOKEN_VALID_AFTER
+            // Time til token is activated.
+            // notBefore: config.security.TOKEN_VALID_AFTER
             //},
           );
           return res.status(200).json({
@@ -107,7 +114,7 @@ exports.user_login = (req, res, next) => {
           });
         }
         res.status(401).json({
-          message: "Authentication failed - usePass"
+          message: "Authentication failed"
         });
       });
     })
@@ -207,6 +214,7 @@ exports.user_update = (req, res, next) => {
   const updateOps = {};
   // Loop through all the operations (that are requested) of the request body.
   for (const ops of req.body) {
+    // updateOps = UpdateOperations
     updateOps[ops.propFirstName] = ops.value;
     updateOps[ops.propLastName] = ops.value;
     updateOps[ops.propDateOfBirth] = ops.value;
@@ -214,7 +222,7 @@ exports.user_update = (req, res, next) => {
     updateOps[ops.propCity] = ops.value;
     updateOps[ops.propPermissionLevel] = ops.value;
     //updateOps[ops.propEmail] = ops.value;
-    updateOps[ops.propPassword] = ops.value;
+    updateOps[ops.propPassword] = bcrypt.hashSync(ops.value, 10);
     updateOps[ops.propPhone] = ops.value;
     updateOps[ops.propFieldOfFocus] = ops.value;
     updateOps[ops.propEducation] = ops.value;
