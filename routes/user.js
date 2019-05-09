@@ -14,7 +14,7 @@ router.post("/user/signup", UserController.user_signup);
 
 router.post("/user/login", UserController.user_login);
 
-router.get("/user/:userId", [checkAuth, UserController.user_get_user]); //checkAuth
+router.get("/user/:userId", [UserController.user_get_user]); //checkAuth
 
 router.get("/users", [
   checkAuth,
