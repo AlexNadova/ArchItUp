@@ -17,12 +17,26 @@ const userModel = new Schema({
     unique: true,
     match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   },
-  password: { type: String, required: true, minlength: 8 },  // match: /(?=.*[a-zA-Z])(?=.*[0-9]+).*/
+  password: { type: String, required: true, minlength: 8 }, // match: /(?=.*[a-zA-Z])(?=.*[0-9]+).*/
   phone: { type: String, required: true },
   fieldOfFocus: { type: Array },
-  education: { type: Array },
-  workExperience: { type: Array },
-  userImage: {type: String},
+  education: [
+    {
+      school: { type: String },
+      specialization: { type: String },
+      yearStart: { type: Number },
+      yearEnd: { type: Number }
+    }
+  ],
+  workExperience: [
+    {
+      company: { type: String },
+      position: { type: String },
+      yearStart: { type: Number },
+      yearEnd: { type: Number }
+    }
+  ],
+  userImage: { type: String },
   description: { type: String }
 });
 
