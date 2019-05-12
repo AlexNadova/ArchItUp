@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/api", userRouter);
-app.use("/api/articles", articleRouter);
+app.use("/api/article", articleRouter);
 
 // Handling Errors pass app.use.
 app.use((req, res, next) => {

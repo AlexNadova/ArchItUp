@@ -6,7 +6,7 @@ const verifyPermission = require("../middleware/verifyPermissions");
 const upload = require("../middleware/uploadFiles");
 const config = require("../config");
 
-// Users on the system
+// User roles
 const ADMIN = config.permissionLevels.ADMIN; // High authority level
 const REG_USER = config.permissionLevels.REG_USER; // Medium authority level
 const VISITORS = config.permissionLevels.VISITORS; // Low authority level
@@ -19,10 +19,13 @@ router.post(
 
 router.post("/user/login", UserController.user_login);
 
+<<<<<<< HEAD
 router.get("/user/:userId", [checkAuth,UserController.user_get_user]); //checkAuth
+=======
+router.get("/user/:userId", [checkAuth, UserController.user_get_user]); //checkAuth
+>>>>>>> 24a5bfb492618ac0d67dacef2d3f47ffaf83f609
 
 router.get("/users", [
-  checkAuth,
   verifyPermission.minimumPermissionLevelRequired(ADMIN),
   UserController.user_get_all
 ]);
