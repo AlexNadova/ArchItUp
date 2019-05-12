@@ -19,11 +19,7 @@ router.post(
 
 router.post("/user/login", UserController.user_login);
 
-<<<<<<< HEAD
-router.get("/user/:userId", [checkAuth,UserController.user_get_user]); //checkAuth
-=======
 router.get("/user/:userId", [checkAuth, UserController.user_get_user]); //checkAuth
->>>>>>> 24a5bfb492618ac0d67dacef2d3f47ffaf83f609
 
 router.get("/users", [
   verifyPermission.minimumPermissionLevelRequired(ADMIN),
