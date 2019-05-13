@@ -13,7 +13,7 @@ const VISITORS = config.permissionLevels.VISITORS; // Low authority level
 
 router.post(
   "/user/signup",
-  upload.single("userImage"),
+  //upload.single("userImage"),
   UserController.user_signup
 );
 
@@ -22,6 +22,7 @@ router.post("/user/login", UserController.user_login);
 router.get("/user/:userId", [checkAuth, UserController.user_get_user]); //checkAuth
 
 router.get("/users", [
+  checkAuth,
   verifyPermission.minimumPermissionLevelRequired(ADMIN),
   UserController.user_get_all
 ]);
