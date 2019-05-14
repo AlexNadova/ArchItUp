@@ -5,7 +5,7 @@ const config = require("../config");
 
 const User = require("../models/userModel");
 
-exports.user_signup = (req, res, next) => {
+exports.user_signup = (req, res) => {
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
@@ -67,7 +67,7 @@ exports.user_signup = (req, res, next) => {
     });
 };
 
-exports.user_login = (req, res, next) => {
+exports.user_login = (req, res) => {
   /* User.find will make an array of all the users to find, but of course there is only one user when login.
   You can also use User.findOne this will make sure you don't get an array but just one user. */
   User.find({ email: req.body.email })
@@ -110,7 +110,8 @@ exports.user_login = (req, res, next) => {
           );
           return res.status(200).json({
             message: "Authentication successful",
-            token: token
+            token: token,
+            id: user[0]._id
           });
         }
         res.status(401).json({
@@ -127,7 +128,7 @@ exports.user_login = (req, res, next) => {
 };
 
 // Get user by Id.
-exports.user_get_user = (req, res, next) => {
+exports.user_get_user = (req, res) => {
   const id = req.params.userId;
   User.findById(id)
     .select(
@@ -153,7 +154,7 @@ exports.user_get_user = (req, res, next) => {
     });
 };
 
-exports.user_get_all = (req, res, next) => {
+exports.user_get_all = (req, res) => {
   User.find()
     .select(
       "_id firstName lastName dateOfBirth country city permissionLevel email password phone fieldOfFocus education workExperience description"
@@ -204,7 +205,7 @@ exports.user_get_all = (req, res, next) => {
 };
 
 // Update user
-exports.user_update = (req, res, next) => {
+exports.user_update = (req, res) => {
   // Get user Id
   const id = req.params.userId;
   // An empty JavaScript object.
@@ -246,7 +247,7 @@ exports.user_update = (req, res, next) => {
     });
 };
 
-exports.user_delete = (req, res, next) => {
+exports.user_delete = (req, res) => {
   User.remove({ _id: req.params.userId })
     .exec()
     .then(result => {
