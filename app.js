@@ -3,19 +3,45 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const indexRouter = require("./routes/index").default;
-const usersRouter = require("./routes/users").default;
+const database = require("./db/mongoDB");
+
+const jwt = require("jsonwebtoken"); // used to create, sign, and verify tokens
+
+const indexRouter = require("./routes/index");
+const userRouter = require("./routes/user");
+const articleRouter = require("./routes/article");
 
 const app = express();
 
+// Get MongoConnection
+database.connectWithCallback();
+
 app.use(logger("dev"));
+// /uploads is where all the saved files can be retrieved. And makes the upload folder public 
+app.use("/uploads", express.static("uploads"));
+// use express.json and express.urlencoded so we can get info from POST and/or URL parameters
+// Parses the text as JSON and exposes the resulting object on req.body.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
+  next();
+});
+
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api", userRouter);
+app.use("/api/article", articleRouter);
 
 // Handling Errors pass app.use.
 app.use((req, res, next) => {
