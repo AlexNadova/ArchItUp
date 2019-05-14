@@ -23,7 +23,7 @@ router.get("/user/:userId", [checkAuth, UserController.user_get_user]); //checkA
 
 router.get("/users", [
   checkAuth,
-  verifyPermission.minimumPermissionLevelRequired(ADMIN),
+  verifyPermission.permissionLevelRequired(ADMIN),
   UserController.user_get_all
 ]);
 

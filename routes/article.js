@@ -28,13 +28,13 @@ router.get("/:articleId", [checkAuth, articleController.articles_get_article]);
 
 router.patch("/:articleId", [
   checkAuth,
-  verifyPermission.minimumPermissionLevelRequired(REG_USER),
+  verifyPermission.permissionLevelRequired(REG_USER),
   articleController.articles_update_article
 ]);
 
 router.delete("/:articleId", [
   checkAuth,
-  verifyPermission.minimumPermissionLevelRequired(REG_USER),
+  verifyPermission.permissionLevelRequired(REG_USER),
   articleController.articles_delete
 ]);
 
