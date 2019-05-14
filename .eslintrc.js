@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     node: true,
-    es6: true,
+    es6: true
   },
   globals: {
     Atomics: "readonly",
@@ -44,5 +44,6 @@ module.exports = {
     "no-multiple-empty-lines": [2, { max: 1 }],
     "no-var": 2,
     "prefer-const": 2
-  }
+  },
+  env: { node: true, mocha: true }
 };

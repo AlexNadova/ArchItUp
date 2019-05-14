@@ -50,13 +50,15 @@ exports.user_signup = (req, res) => {
                 .save()
                 .then(result => {
                   console.log(result);
-                  res.status(201).json({
+                  res.status(201);
+                  return res.json({
                     message: "User created"
                   });
                 })
                 .catch(err => {
                   console.log(err);
-                  res.status(500).json({
+                  res.status(500);
+                  res.json({
                     error: err
                   });
                 });
@@ -138,10 +140,7 @@ exports.user_get_user = (req, res) => {
     .then(doc => {
       console.log("From database", doc);
       if (doc) {
-        res.status(200).json(
-          doc
-
-        );
+        res.status(200).json(doc);
       } else {
         res
           .status(404)
