@@ -1,4 +1,3 @@
-
 //The require(‘mongoose’) call returns a Singleton object.
 const mongoose = require("mongoose");
 const config = require("../config");
@@ -10,7 +9,7 @@ class Database {
 
   connectWithPromise() {
     mongoose
-      .connect(uri, {useNewUrlParser: true})
+      .connect(uri, { useNewUrlParser: true })
       .then(() => {
         console.log("Database connection successful");
       })
@@ -20,10 +19,15 @@ class Database {
   }
 
   connectWithCallback() {
-    mongoose.connect(uri, {useNewUrlParser: true}, err => {
+    mongoose.connect(uri, { useNewUrlParser: true }, err => {
       if (err) return console.log(err);
       console.log("Database connection successful");
     });
+  }
+
+  // TODO: Is this necessary?
+  closeConnection() {
+    return mongoose.disconnect();
   }
 }
 

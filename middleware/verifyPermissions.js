@@ -5,7 +5,7 @@ const secret = require("../config"); //["security"]; //security.SECRETKEY
 
 const ADMIN_PERMISSION = 4096;
 
-exports.minimumPermissionLevelRequired = required_permission_level => {
+exports.permissionLevelRequired = required_permission_level => {
   return (req, res, next) => {
     // Gets the token from the header and The split() method returns a new array.
     const token = req.headers.authorization.split(" ")[1];
