@@ -1,7 +1,7 @@
 const should = require("should");
 const sinon = require("sinon");
 const userCtr = require("../../controllers/userController");
-//const User = require("../../models/userModel");
+const User = require("../../models/userModel");
 
 // BDD style testing
 
@@ -11,18 +11,26 @@ describe("User Controller Tests", () => {
   describe("SignUp user", () => {
     // Layout the test
     it("should not allow a empty firstName on post", () => {
-      const User = function(user) {
-        this.save = () => {};
-      };
-
-      const req = {
+      //const User = function(user) {
+      // this.save = () => {};
+      //};
+      const req = new User({
         body: {
           firstName: "Peter",
           lastName: "Tester",
           email: "peter@mail.com",
           password: "Ab123123"
         }
-      };
+      });
+      console.log("what user " + req);
+      /* const req = {
+        body: {
+          firstName: "Peter",
+          lastName: "Tester",
+          email: "peter@mail.com",
+          password: "Ab123123"
+        }
+      }; */
 
       const res = {
         /* sinon.spy(): Is creating a spy function using Sinon framework 
@@ -36,8 +44,14 @@ describe("User Controller Tests", () => {
       controller.user_signup(req, res);
       res.status
         .calledWith(400)
-        .should.equal(true, "Bad Status");
+        .should.equal(true, `Bad Status ${res.status.args[0][0]}`);
       res.send.calledWith("Last name is required").should.equal(true);
     });
   });
+
+  /* describe("Login user", () => {
+    it("Received a jwt", () => {
+
+    });
+  }); */
 });
