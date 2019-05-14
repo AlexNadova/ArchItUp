@@ -8,26 +8,18 @@ const conn = require("../db/mongoDB");
 
 // Describe out thing
 describe("Basic Mocha Test", () => {
-  before(done => {
-    conn
-      .connectWithCallback()
-      .then(() => done())
-      .catch(err => done(err));
-  });
-
-  after(done => {
-    conn
-      .closeConnection()
-      .then(() => done())
-      .catch(err => done(err));
-  });
 
   // The test itself
   // done because it is asynchronous.
   it("Creating a new user", done => {
-    request(userRouter)
+    request(userRouter.route)
       .post("/user/signup")
-      .send({ firstName: "Peter", lastName: "Petersen", email: "peter@mail.com", password: "Ab123123" })
+      .send({
+        firstName: "Peter",
+        lastName: "Petersen",
+        email: "peter@mail.com",
+        password: "Ab123123"
+      })
       .then(res => {
         const body = res.body;
         expect(body).to.contain("_id");
@@ -36,6 +28,7 @@ describe("Basic Mocha Test", () => {
         expect(body).to.contain("email");
         expect(body).to.contain("password");
         done();
-      });
+      })
+      .catch(err => done(err));
   });
 });

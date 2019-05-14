@@ -25,13 +25,40 @@ class Database {
     });
   }
 
+  connectWithCallback_TEST() {
+    return new Promise((resolve, reject) => {
+      if (process.env.NODE_ENV === "test") {
+        const Mockgoose = require("mockgoose").Mockgoose;
+        const mockgoose = new Mockgoose(mongoose);
+
+        mockgoose.prepareStorage().then(() => {
+          mongoose
+            .connect(uri, { useNewUrlParser: true, useCreateIndex: true })
+            .then((res, err) => {
+              if (err) return reject(err);
+              console.log("Database connection successful TEST");
+              resolve();
+            });
+        });
+      } else {
+        mongoose
+          .connect(uri, { useNewUrlParser: true, useCreateIndex: true })
+          .then((res, err) => {
+            if (err) return reject(err);
+            console.log("Database connection successful TEST2");
+            resolve();
+          });
+      }
+    });
+  }
+
   closeConnection() {
     mongoose.connection.close(err => {
       if (err) return console.log(err);
       else {
         console.log("Database connection closed");
       }
-    }) 
+    });
     //return mongoose.connection.close();
     //return mongoose.disconnect();
   }

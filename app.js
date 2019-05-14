@@ -14,7 +14,7 @@ const articleRouter = require("./routes/article");
 const app = express();
 
 // Get MongoConnection
-database.connectWithCallback();
+database.connectWithCallback_TEST();
 
 app.use(logger("dev"));
 // /uploads is where all the saved files can be retrieved. And makes the upload folder public 
