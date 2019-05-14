@@ -25,9 +25,15 @@ class Database {
     });
   }
 
-  // TODO: Is this necessary?
   closeConnection() {
-    return mongoose.disconnect();
+    mongoose.connection.close(err => {
+      if (err) return console.log(err);
+      else {
+        console.log("Database connection closed");
+      }
+    }) 
+    //return mongoose.connection.close();
+    //return mongoose.disconnect();
   }
 }
 

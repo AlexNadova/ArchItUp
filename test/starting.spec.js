@@ -24,15 +24,17 @@ describe("Basic Mocha Test", () => {
 
   // The test itself
   // done because it is asynchronous.
-  it("OK, creating a new user", done => {
+  it("Creating a new user", done => {
     request(userRouter)
       .post("/user/signup")
-      .send({ firstName: "aName", lastName: "theLastName" })
+      .send({ firstName: "Peter", lastName: "Petersen", email: "peter@mail.com", password: "Ab123123" })
       .then(res => {
         const body = res.body;
         expect(body).to.contain("_id");
         expect(body).to.contain("firstName");
         expect(body).to.contain("lastName");
+        expect(body).to.contain("email");
+        expect(body).to.contain("password");
         done();
       });
   });
