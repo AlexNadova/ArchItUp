@@ -25,6 +25,7 @@ exports.hasAuthValidFields = (req, res, next) => {
   }
 };
 
+/*
 exports.isPasswordAndUserMatch = (req, res, next) => {
   User.findByEmail(req.body.email).then(user => {
     if (!user[0]) {
@@ -58,4 +59,5 @@ exports.isPasswordAndUserMatch = (req, res, next) => {
       }
     }
   });
-};
+  };
+  */
