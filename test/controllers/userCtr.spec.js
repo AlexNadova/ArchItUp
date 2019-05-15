@@ -11,10 +11,11 @@ describe("User Controller Tests", () => {
   describe("SignUp user", () => {
     // Layout the test
     it("should not allow a empty firstName on post", () => {
+      const user = new User();
       //const User = function(user) {
       // this.save = () => {};
       //};
-      const req = new User({
+      /*const req = new User({
         body: {
           firstName: "Peter",
           lastName: "Tester",
@@ -22,15 +23,20 @@ describe("User Controller Tests", () => {
           password: "Ab123123"
         }
       });
-      console.log("what user " + req);
-      /* const req = {
+      User.
+      console.log("what user " + req);*/
+      const req = {
         body: {
           firstName: "Peter",
           lastName: "Tester",
           email: "peter@mail.com",
           password: "Ab123123"
         }
-      }; */
+      }; 
+
+      const use = new User({
+        do
+      })
 
       const res = {
         /* sinon.spy(): Is creating a spy function using Sinon framework 
@@ -42,6 +48,7 @@ describe("User Controller Tests", () => {
 
       const controller = userCtr;
       controller.user_signup(req, res);
+      User.find(req.body.email);
       res.status
         .calledWith(400)
         .should.equal(true, `Bad Status ${res.status.args[0][0]}`);
@@ -54,4 +61,5 @@ describe("User Controller Tests", () => {
 
     });
   }); */
+
 });
