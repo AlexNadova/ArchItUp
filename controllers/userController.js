@@ -218,8 +218,8 @@ exports.user_update = (req, res) => {
     updateOps[ops.propCountry] = ops.value;
     updateOps[ops.propCity] = ops.value;
     updateOps[ops.propPermissionLevel] = ops.value;
-    //updateOps[ops.propEmail] = ops.value;
-    updateOps[ops.propPassword] = bcrypt.hashSync(ops.value, 10);
+    updateOps[ops.propEmail] = ops.value;
+    updateOps[ops.propPassword] = ops.value;//bcrypt.hashSync(ops.value, 10);
     updateOps[ops.propPhone] = ops.value;
     updateOps[ops.propFieldOfFocus] = ops.value;
     updateOps[ops.propEducation] = ops.value;
