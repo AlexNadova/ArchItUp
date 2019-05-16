@@ -1,33 +1,27 @@
-/* const expect = require("chai").expect;
-const request = require("supertest");
+const chai = require("chai");
+const expect = chai.expect;
+const sinon = require("sinon");
+const ctr = require("../controllers/userController");
 
-const app = require("../app");
-const userRouter = require("../routes/user");
-const conn = require("../db/mongoDB");
+describe("User Controller", function() {
+  it("should return a user", function() {
+    //"localhost:4000/api/user/868b4e90a3c1318a7";
+    const userId = "868b4e90a3c1318a7";
+    const req = { params: userId };
 
-// Describe out thing
-describe("Basic Mocha Test", () => {
+    const res = {
+      status: sinon.spy(),
+      send: sinon.spy(),
+      json: sinon.spy()
+    };
 
-  // The test itself
-  // done because it is asynchronous.
-  it("Creating a new user", done => {
-    request(userRouter.route)
-      .post("/user/signup")
-      .send({
-        firstName: "Peter",
-        lastName: "Petersen",
-        email: "peter@mail.com",
-        password: "Ab123123"
-      })
-      .then(res => {
-        const body = res.body;
-        expect(body).to.contain("_id");
-        expect(body).to.contain("firstName");
-        expect(body).to.contain("lastName");
-        expect(body).to.contain("email");
-        expect(body).to.contain("password");
-        done();
-      })
-      .catch(err => done(err));
+    ctr.user_get_user(req, res);
+    res.json();
+    console.log("console: " + req.params + " and " + res.send + " - " + res.status + " - res.json: " + res.json);
+    //res.status.calledWith().res.json();
+    
+    expect(res.status.calledOnce).to.be.true;
+
+    expect(res.send.firstCall.args[0]).to.equal("bla");
   });
-}); */
+});
