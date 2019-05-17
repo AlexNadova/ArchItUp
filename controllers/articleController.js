@@ -95,13 +95,7 @@ exports.articles_get_article = (req, res, next) => {
     .then(doc => {
       console.log("From database", doc);
       if (doc) {
-        res.status(200).json({
-          article: doc,
-          request: {
-            type: "GET",
-            url: "http://localhost:4000/api/articles"
-          }
-        });
+        res.status(200).json(doc);
       } else {
         res
           .status(404)
