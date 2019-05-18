@@ -55,7 +55,7 @@ exports.articles_create_article = (req, res, next) => {
     description: req.body.description,
     keywords: req.body.keywords,
     //articleImages: req.file.path,
-    titleImage: req.file.path,
+    //titleImage: req.file.path,
     category: req.body.category,
     content: req.body.content
   });
