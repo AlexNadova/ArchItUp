@@ -5,7 +5,7 @@ const Article = require("../models/articleModel");
 exports.articles_get_all = (req, res, next) => {
   Article.find()
     .select(
-      "_id title author description keywords articleImages titleImage category content"
+      "_id title author description keywords articleImages titleImage category content ownerId"
     )
     .exec()
     .then(docs => {
@@ -23,6 +23,7 @@ exports.articles_get_all = (req, res, next) => {
             titleImage: doc.titleImage,
             category: doc.category,
             content: doc.content,
+            ownerId: doc.ownerId,
             request: {
               type: "GET",
               url: "http://localhost:4000/api/articles/" + doc._id
@@ -57,7 +58,8 @@ exports.articles_create_article = (req, res, next) => {
     //articleImages: req.file.path,
     //titleImage: req.file.path,
     category: req.body.category,
-    content: req.body.content
+    content: req.body.content,
+    ownerId: req.body.ownerId
   });
   article
     .save()
@@ -89,7 +91,7 @@ exports.articles_get_article = (req, res, next) => {
   const id = req.params.articleId;
   Article.findById(id)
     .select(
-      "_id title author description keywords articleImages titleImage category content"
+      "_id title author description keywords articleImages titleImage category content ownerId"
     )
     .exec()
     .then(doc => {
@@ -124,6 +126,7 @@ exports.articles_update_article = (req, res, next) => {
     updateOps[ops.propTitleImage] = ops.value;
     updateOps[ops.propCategory] = ops.value;
     updateOps[ops.propContent] = ops.value;
+    updateOps[ops.propOwnerId] = ops.value;
   }
   Article.updateOne({ _id: id }, { $set: updateOps })
     .exec()

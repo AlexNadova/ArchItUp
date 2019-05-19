@@ -11,7 +11,8 @@ const articleModel = new Schema({
   articleImages: { type: Array },
   titleImage: { type: String },
   category: { type: Boolean },
-  content: { type: String }
+  content: { type: String },
+  ownerId: { type: String, required: true }
 });
 
 module.exports = mongoose.model("Article", articleModel);
