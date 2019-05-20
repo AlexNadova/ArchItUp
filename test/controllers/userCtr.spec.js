@@ -22,6 +22,7 @@ describe("User Controller Tests", () => {
         email: "peter@mail.com",
         password: "Ab123123"
       });
+
       /*const req = new User({
         body: {
           firstName: "Peter",
@@ -34,6 +35,8 @@ describe("User Controller Tests", () => {
       const req = {
         body: {
           firstName: "Peter",
+          city: User.what = "herMan",
+          description: User.description = "sdfc sdv df ",
           lastName: "Tester",
           email: "peter@mail.com",
           password: "Ab123123"
@@ -51,6 +54,7 @@ describe("User Controller Tests", () => {
       const controller = userCtr;
       controller.user_signup(req, res);
       User.find(req.body.email);
+      console.log("Signconsole: " + req.body.city);
       //res.status
       //  .calledWith(400)
       //  .should.equal(true, `Bad Status ${res.status.args[0][0]}`);

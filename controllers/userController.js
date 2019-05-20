@@ -210,6 +210,7 @@ exports.user_update = (req, res) => {
   // An empty JavaScript object.
   const updateOps = {};
   // Loop through all the operations (that are requested) of the request body.
+
   for (const ops of req.body) {
     // updateOps = UpdateOperations
     updateOps[ops.propFirstName] = ops.value;
@@ -219,14 +220,15 @@ exports.user_update = (req, res) => {
     updateOps[ops.propCity] = ops.value;
     updateOps[ops.propPermissionLevel] = ops.value;
     updateOps[ops.propEmail] = ops.value;
-    updateOps[ops.propPassword] = ops.value;//bcrypt.hashSync(ops.value, 10);
+    updateOps[ops.propPassword] = bcrypt.hashSync(ops.value, 10);
     updateOps[ops.propPhone] = ops.value;
     updateOps[ops.propFieldOfFocus] = ops.value;
     updateOps[ops.propEducation] = ops.value;
     updateOps[ops.propWorkExperience] = ops.value;
     updateOps[ops.propDescription] = ops.value;
   }
-  User.update({ _id: id }, { $set: updateOps })
+  
+  User.update({ _id: id }, { $set: updateOps }) // $set: {updateOps, req.body.newPassword}
     .exec()
     .then(result => {
       console.log(result); // <-- Remove when done
