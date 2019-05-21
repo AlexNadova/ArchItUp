@@ -10,28 +10,31 @@ describe("User Controller Tests", () => {
   // what is testing - method
   describe("SignUp user", () => {
     // Layout the test
-    it("should not allow a empty firstName on post", () => {
+    it("should have all required properties to create user", () => {
       //const User = function(user) {
       // this.save = () => {};
       // User.arguments();
       //};
 
-      const user = new User({
-        firstName: "Peter",
-        lastName: "Tester",
-        email: "peter@mail.com",
-        password: "Ab123123"
-      });
-
-      /*const req = new User({
+      /* const req = {
         body: {
+          User: {
+            firstName: "Peter",
+            lastName: "Tester",
+            email: "peter@mail.com",
+            password: "Ab123123"
+          }
+        }
+      }; */
+      const req = new User({
           firstName: "Peter",
           lastName: "Tester",
           email: "peter@mail.com",
           password: "Ab123123"
-        }
-      });*/
+      });
 
+      console.log("-------console.log-------- \na user " + req + "\n ------------------------");
+      /*
       const req = {
         body: {
           firstName: "Peter",
@@ -41,7 +44,7 @@ describe("User Controller Tests", () => {
           email: "peter@mail.com",
           password: "Ab123123"
         }
-      }; 
+      }; */
 
       const res = {
         /* sinon.spy(): Is creating a spy function using Sinon framework 
@@ -54,11 +57,11 @@ describe("User Controller Tests", () => {
       const controller = userCtr;
       controller.user_signup(req, res);
       User.find(req.body.email);
-      console.log("Signconsole: " + req.body.city);
-      //res.status
-      //  .calledWith(400)
-      //  .should.equal(true, `Bad Status ${res.status.args[0][0]}`);
+      res.status
+      .calledWith(400)
+      //.should.equal(true, `Bad Status ${res.status.args[0][0]}`);
       //res.send.calledWith("Last name is required").should.equal(true);
+      console.log("--- After " + res.status);
     });
   });
 
@@ -67,5 +70,4 @@ describe("User Controller Tests", () => {
 
     });
   }); */
-  
 });
