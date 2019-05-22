@@ -19,7 +19,7 @@ router.post(
 
 router.post("/user/login", UserController.user_login);
 
-router.get("/user/:userId", UserController.user_get_user); //checkAuth
+router.get("/user/:userId", [checkAuth, UserController.user_get_user]);
 
 router.get("/users", [
   checkAuth,
@@ -27,8 +27,16 @@ router.get("/users", [
   UserController.user_get_all
 ]);
 
-router.patch("/user/:userId", [checkAuth, UserController.user_update]); // Same user only and Admin
+router.patch("/user/:userId", [
+  checkAuth,
+  verifyPermission.permissionLevelRequired(REG_USER),
+  UserController.user_update
+]);
 
-router.delete("/user/:userId", [checkAuth, UserController.user_delete]); // Same user only and Admin
+router.delete("/user/:userId", [
+  checkAuth,
+  verifyPermission.permissionLevelRequired(REG_USER),
+  UserController.user_delete
+]);
 
 module.exports = router;
