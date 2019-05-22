@@ -65,8 +65,8 @@ describe("User Controller Tests", () => {
     });
   });
 
-  /* describe("Login user", () => {
-    it("Received a jwt", () => {
+  /* describe("GET /user/:id", function () {
+    it("Return a user", function () {
 
     });
   }); */

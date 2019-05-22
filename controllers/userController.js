@@ -74,6 +74,7 @@ exports.user_login = (req, res) => {
   You can also use User.findOne this will make sure you don't get an array but just one user. */
   User.find({ email: req.body.email })
     .exec()
+    // get the user. user is an arry
     .then(user => {
       if (user.length < 1) {
         return res.status(401).json({
@@ -92,6 +93,7 @@ exports.user_login = (req, res) => {
         }
         if (result) {
           // Generate the token. Header, Payload and Signature.
+          // By default uses the algorithm HS256.
           const token = jwt.sign(
             {
               // Token's Payload
@@ -102,13 +104,9 @@ exports.user_login = (req, res) => {
             // Token's PrivateKey
             config.security.SECRETKEY,
             {
-              // Token expires time
+              // Token expire time
               expiresIn: config.security.TOKEN_EXP
             }
-            //{
-            // Time til token is activated.
-            // notBefore: config.security.TOKEN_VALID_AFTER
-            //},
           );
           return res.status(200).json({
             message: "Authentication successful",
@@ -209,8 +207,8 @@ exports.user_update = (req, res) => {
   const id = req.params.userId;
   // An empty JavaScript object.
   const updateOps = {};
-  // Loop through all the operations (that are requested) of the request body.
-
+  /* Loop through all the operations (that are requested) 
+  of the request body. */
   for (const ops of req.body) {
     // updateOps = UpdateOperations
     updateOps[ops.propFirstName] = ops.value;
@@ -220,15 +218,14 @@ exports.user_update = (req, res) => {
     updateOps[ops.propCity] = ops.value;
     updateOps[ops.propPermissionLevel] = ops.value;
     updateOps[ops.propEmail] = ops.value;
-    updateOps[ops.propPassword] = bcrypt.hashSync(ops.value, 10);
+    updateOps[ops.propPassword] = ops.value; //bcrypt.hashSync(ops.value, 10);
     updateOps[ops.propPhone] = ops.value;
     updateOps[ops.propFieldOfFocus] = ops.value;
     updateOps[ops.propEducation] = ops.value;
     updateOps[ops.propWorkExperience] = ops.value;
     updateOps[ops.propDescription] = ops.value;
   }
-  
-  User.update({ _id: id }, { $set: updateOps }) // $set: {updateOps, req.body.newPassword}
+  User.update({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {
       console.log(result); // <-- Remove when done

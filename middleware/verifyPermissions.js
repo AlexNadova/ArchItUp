@@ -7,7 +7,7 @@ const ADMIN_PERMISSION = 4096;
 
 exports.permissionLevelRequired = required_permission_level => {
   return (req, res, next) => {
-    // Gets the token from the header and The split() method returns a new array.
+    // Gets the token from the header and The split() method returns a new array with the token.
     const token = req.headers.authorization.split(" ")[1];
     /* The token is verified by the secretKey and the payload permissionLevel is singled out
     and converted to type number. */   
@@ -20,8 +20,7 @@ exports.permissionLevelRequired = required_permission_level => {
       return res
         .status(403)
         .send(
-          //TODO: REMEMBER TO DELETE: > + user_permission_level + " " + required_permission_level <
-          "You do not have authority to access this data " + user_permission_level + " " + required_permission_level
+          "You do not have authority to access this data "
         );
     }
   };

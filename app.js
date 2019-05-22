@@ -5,8 +5,6 @@ const logger = require("morgan");
 
 const database = require("./db/mongoDB");
 
-const jwt = require("jsonwebtoken"); // used to create, sign, and verify tokens
-
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
 const articleRouter = require("./routes/article");
@@ -45,7 +43,7 @@ app.use("/api/article", articleRouter);
 
 // Handling Errors pass app.use.
 app.use((req, res, next) => {
-  const error = new Error("Not found, tdo - Status 404?");
+  const error = new Error("Not found, tdo - Status 404");
   error.status = 404;
   next(error);
 });
