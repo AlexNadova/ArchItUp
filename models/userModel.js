@@ -10,7 +10,7 @@ const userModel = new Schema({
   dateOfBirth: { type: Date },
   country: { type: String },
   city: { type: String },
-  permissionLevel: { type: Number, default: config.permissionLevels.REG_USER },
+  permissionLevel: { type: Number, default: config.permissionLevels.DEFAULT_USER },
   email: {
     type: String,
     required: true,
