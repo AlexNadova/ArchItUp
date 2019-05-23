@@ -9,19 +9,20 @@ exports.permissionLevelRequired = required_permission_level => {
   return (req, res, next) => {
     // Gets the token from the header and The split() method returns a new array with the token.
     const token = req.headers.authorization.split(" ")[1];
+
     /* The token is verified by the secretKey and the payload permissionLevel is singled out
-    and converted to type number. */   
-    const user_permission_level = parseInt(jwt.verify(token, secret.security.SECRETKEY).permissionLevel);
-    //const user_id = req.jwt.user_id;
-    // Uses Bitwise to compare user and required permission levels. See file PermissionLevels.txt
+    and converted to type number. */
+    const user_permission_level = parseInt(
+      jwt.verify(token, secret.security.SECRETKEY).permissionLevel
+    );
+    /* Uses Bitwise to compare user and required permission levels. 
+    See file PermissionLevels.txt */
     if (user_permission_level & required_permission_level) {
       return next();
     } else {
       return res
         .status(403)
-        .send(
-          "You do not have authority to access this data "
-        );
+        .send("You do not have authority to access this data ");
     }
   };
 };
