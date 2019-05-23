@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const helmet = require("helmet");
 
 const database = require("./db/mongoDB");
 
@@ -15,7 +16,8 @@ const app = express();
 database.connectWithCallback();
 
 app.use(logger("dev"));
-// /uploads is where all the saved files can be retrieved. And makes the upload folder public 
+app.use(helmet());
+// /uploads is where all the saved files can be retrieved. And makes the upload folder public
 app.use("/uploads", express.static("uploads"));
 // use express.json and express.urlencoded so we can get info from POST and/or URL parameters
 // Parses the text as JSON and exposes the resulting object on req.body.
