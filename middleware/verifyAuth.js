@@ -3,7 +3,8 @@ const secret = require("../config");
 
 module.exports = (req, res, next) => {
   try {
-    // The split() method is used to split a string into an array of substrings, and returns the new array.
+    /* The split() method is used to split a string into an array of substrings, and returns the new array.
+    Splitting the Bearer and the white space from the token it self, then access the second segment (index 1) */
     const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, secret.security.SECRETKEY, (err, decoded) => {
       // If current token is invalid, sends a jwt expired error.
