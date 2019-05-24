@@ -7,9 +7,9 @@ const upload = require("../middleware/uploadFiles");
 const config = require("../config");
 
 // User roles
-const ADMIN = config.permissionLevels.ADMIN; // High authority level
-const REG_USER = config.permissionLevels.REG_USER; // Medium authority level
-const VISITORS = config.permissionLevels.VISITORS; // Low authority level
+const ADMIN = config.permissionLevels.ADMIN;
+const REG_USER = config.permissionLevels.REG_USER;
+const VISITORS = config.permissionLevels.VISITORS;
 
 router.post(
   "/user/signup",
