@@ -132,7 +132,7 @@ exports.user_get_user = (req, res) => {
   const id = req.params.userId;
   User.findById(id)
     .select(
-      "_id firstName lastName dateOfBirth country city permissionLevel email password phone fieldOfFocus education workExperience description"
+      "_id firstName lastName dateOfBirth country city permissionLevel email phone fieldOfFocus education workExperience description"
     )
     .exec()
     .then(doc => {
@@ -154,7 +154,7 @@ exports.user_get_user = (req, res) => {
 exports.user_get_all = (req, res) => {
   User.find()
     .select(
-      "_id firstName lastName dateOfBirth country city permissionLevel email password phone fieldOfFocus education workExperience description"
+      "_id firstName lastName dateOfBirth country city permissionLevel email phone fieldOfFocus education workExperience description"
     )
     .exec()
     .then(docs => {
@@ -205,7 +205,7 @@ exports.user_get_all = (req, res) => {
 exports.user_update = (req, res) => {
   // Get user Id
   const id = req.params.userId;
-  // An empty JavaScript object.
+  // An empty object.
   const updateOps = {};
   /* Loop through all the operations (that are requested) 
   of the request body. */
@@ -218,7 +218,6 @@ exports.user_update = (req, res) => {
     updateOps[ops.propCity] = ops.value;
     updateOps[ops.propPermissionLevel] = ops.value;
     updateOps[ops.propEmail] = ops.value;
-    //updateOps[ops.propPassword] = bcrypt.hashSync(ops.value, 10);
     updateOps[ops.propPhone] = ops.value;
     updateOps[ops.propFieldOfFocus] = ops.value;
     updateOps[ops.propEducation] = ops.value;
